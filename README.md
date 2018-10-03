@@ -2,6 +2,12 @@
 
 This is an example project for illustrating a specific case of multi-project build with mill.
 
+See Pull Requests for attempts to make this work! https://github.com/jackkoenig/mill-multi-project/pulls
+
+[One of them even works](https://github.com/jackkoenig/mill-multi-project/pull/2) although it has some issues.
+
+## Problem Statement
+
 In this example, we have 3 projects: `top`, `bar`, and `foo`.
 
 1. `foo` has no dependencies and can be compiled and run on it's own
