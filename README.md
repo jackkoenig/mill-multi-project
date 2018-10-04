@@ -1,28 +1,32 @@
 # mill-multi-project
 
-This is an example project for illustrating a specific case of multi-project build with mill.
-
-See Pull Requests for attempts to make this work! https://github.com/jackkoenig/mill-multi-project/pulls
-
-[One of them even works](https://github.com/jackkoenig/mill-multi-project/pull/2) although it has some issues.
+This is an example project for illustrating a complex multi-module build with mill.
 
 ## Problem Statement
 
-In this example, we have 3 projects: `top`, `bar`, and `foo`.
+In this example, we have 4 projects: `top`, `bar`, `fizz`, and `foo`.
 
-1. `foo` has no dependencies and can be compiled and run on it's own
-2. `bar` has an ivy dependency on `foo`
-3. `top` has a module dependency on `foo` and `bar`
+1. `foo` has no dependencies and can be compiled and run on its own
+2. `fizz` is a "sub-module" of `bar` that has a dependency on `foo`
+3. `bar` has a module dependency on `fizz`
+4. `top` has a module dependency on `bar`
 
-To build this, you need to first publish `foo` and then you can run `top`:
+The purpose of this example is to illustrate that the dependency of `fizz` on `foo` can be *either*
+an ivy dependency or a module dependency. By default in the `bar` directory, it uses an ivy
+dependency. `top` creates a parallel `bar2` module that instead uses a module dependency on `foo`.
+
+To run `top`, you do not need to publish `foo`, you can just run:
+
+```
+> mill top.run
+```
+
+To build `bar` in isolation, you need to first publish `foo` and then you can run `bar`:
 
 ```
 > cd foo
 > mill foo.publishLocal
-> cd ..
-> mill top.run
+> cd ../bar
+> mill bar.run
 ```
 
-What I would like to be able to do, is to override `bar`'s ivy dependencies, removing the one on foo, 
-and replace it with a module dependency on `foo`. In that case, you would no longer need to publish `foo`,
-instead you could just run `top` as is based on the build configuration.

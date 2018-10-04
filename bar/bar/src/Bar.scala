@@ -1,11 +1,11 @@
 
 package bar
 
-import foo._
+import fizz._
 
-case class Bar(foo: Foo)
+case class Bar(fizz: Fizz)
 
 object Main extends App {
-  val bar = Bar(Foo("Hello World!"))
+  val bar = Bar(Fizz())
   println(bar)
 }
